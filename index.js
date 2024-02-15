@@ -11,13 +11,25 @@ const questions = [
     name: "projTitle",
     message: "Enter the title of your project",
     default: "",
+    validate(value) {
+      if (!value) {
+        return "Please enter a Project Title";
+      }
+      return true;
+    },
   },
   // Project Description
   {
-    type: "input",
+    type: "editor",
     name: "projDesc",
     message: "Enter the description of your project",
-    default: "",
+    validate(text) {
+      if (text.split("\n").length < 1) {
+        return "Must be at least 1 lines.";
+      }
+      return true;
+    },
+    waitUserInput: true,
   },
   // Links to Repo and Live
   {
@@ -25,12 +37,24 @@ const questions = [
     name: "projRepo",
     message: "Enter the Repo URL of your project",
     default: "https://github.com/project",
+    validate(value) {
+      if (value.split("/").length < 5) {
+        return "Please enter a valid Repo URL";
+      }
+      return true;
+    },
   },
   {
     type: "input",
     name: "projURL",
     message: "Enter the URL for the live site of your project",
     default: "https://<yourname.github.io/project",
+    validate(value) {
+      if (value.split("/").length < 4) {
+        return "Please enter a valid Site URL";
+      }
+      return true;
+    },
   },
   // Installation instructions (Default N/A)
   {
@@ -122,7 +146,7 @@ function writeToFile(fileName, data) {
 // function to initialize program
 async function init() {
   // initialise/set variables
-  let readMe = "";
+  let responses;
   // ask questions (with validation, with list selections, with defaults)
   await inquirer.prompt(questions).then((answers) => {
     // get repo name and user name from projRepo
@@ -134,75 +158,32 @@ async function init() {
       "/" +
       repoArr[4] +
       ")";
-
-    // create markdown of the readme
-    const readMeMain = `# ${answers.projTitle}
-${projLicImg}
-
-## Description
-${answers.projDesc}
-                
-## Table of Contents
-* [Links](#links)
-* [Installation](#installation)
-* [Usage](#usage)
-* [Screenshots](#screenshots)
-* [Project Items](#project-items)
-* [License](#license)
-* [Features](#features)
-                
-## Links
-* [Repo](${answers.projRepo})
-* [Live](${answers.projURL})
-                
-## Installation
-${answers.projInst}
-                
-## Usage
-${answers.projUsage}
-        
-## Screenshots
-                
-## License
-${answers.projLic}
-
-## Features
-${answers.projFeat}
-
-## Contributions
-${answers.projCont}
-
-## Tests
-${answers.projTst}
-
-## Acknowledgements
-${answers.projAck}
-`;
+    answers.projLicImg = projLicImg;
+    // build questions and add to answers object before passing to generateMarkdown()
+    let ansEml =
+      "If you wish to contact me, you can email me at " + answers.projEml;
+    let ansGit =
+      "My github profile can be found at https://github.com/" + answers.projGit;
 
     if (answers.projEml === "N/A" && answers.projGit === "N/A") {
-      readMe = readMeMain;
+      answers.q1 = "N/A";
+      answers.q2 = "";
+    } else if (!answers.projEml === "N/A" && !answers.projGit === "N/A") {
+      answers.q1 = ansEml;
+      answers.q2 = ansGit;
+    } else if (!answers.projEml) {
+      answers.q1 = ansEml;
+      answers.q2 = "";
     } else {
-      readMe = readMeMain+`
-## Questions?`;
-      if (!answers.projEml === "N/A") {
-        readMe += `
-If you wish to contact me, you can email me at ${answers.projEml}`;
-      }
-      if (!answers.projGit === "N/A") {
-        readMe += `
-My github profile can be found at https://github.com/${answers.projGit}`;
-      }
+      answers.q1 = ansGit;
+      answers.q2 = "";
     }
-    readMe += `
-© 2024 edX Boot Camps LLC. Confidential and Proprietary. All Rights Reserved.`;
+    responses = answers;
   });
 
-  // Questions section
-  // When a user enters their GitHub username then this is added to the section of the README entitled Questions, with a link to their GitHub profile
-  // When a user enters their email address then this is added to the section of the README entitled Questions, with instructions on how to reach them with additional question
-
+  console.log(responses);
   // save to README.md in specified directory
-  await writeToFile("README.md", readMe);
+  await writeToFile("README.md", generateMarkdown(responses));
 }
 
 // function call to initialize program

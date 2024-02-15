@@ -1,9 +1,11 @@
-# What's T'Weather?
-![GitHub License](https://img.shields.io/github/license/cadbuckle/weather-forecast)
+# weather
+undefined
 
 ## Description
-show thee ta weather 4cast
-                
+asn;fja
+] ;oinjab;relyjmv pa9egu a;ea46b 54;o ghsdf 
+
+
 ## Table of Contents
 * [Links](#links)
 * [Installation](#installation)
@@ -12,33 +14,36 @@ show thee ta weather 4cast
 * [Project Items](#project-items)
 * [License](#license)
 * [Features](#features)
-                
+
 ## Links
 * [Repo](https://github.com/cadbuckle/weather-forecast)
 * [Live](https://github.com/cadbuckle/weather-forecast)
-                
+
 ## Installation
-copy files
-                
+copy the files
+
 ## Usage
-open page, enter location.  If used before you can also select a location you've searched before
-        
+asd jfkjfd sakjshd flkha sdf 
+
 ## Screenshots
-                
+
 ## License
-GNU General Public License v3.0
+BSD 2-Clause "Simplified" License
 
 ## Features
-api
+api and other things
 
 ## Contributions
-download and change
+N/A
 
 ## Tests
-open it, try it
+N/A
 
 ## Acknowledgements
-me
+me, w3schools
 
-      ## Questions?
+## Questions?
+My github profile can be found at https://github.com/cadbuckle
+
+
 © 2024 edX Boot Camps LLC. Confidential and Proprietary. All Rights Reserved.
