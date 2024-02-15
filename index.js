@@ -45,7 +45,7 @@ const questions = [
         type: 'input',
         name: 'projUsage',
         message: 'Enter usage information',
-        default: '',
+        default: 'N/A',
     },
     // Screenshots - no questions but empter section created in ReadMe
     // License (List + badge)
@@ -60,14 +60,14 @@ const questions = [
         type: 'input',
         name: 'projFeat',
         message: 'Enter any feature of the project',
-        default: '',
+        default: 'N/A',
     },
     // Acknowledgements
     {
         type: 'input',
         name: 'projAck',
         message: 'Enter acknowledgements/references for this project',
-        default: '',
+        default: 'N/A',
     },
     // Tests 
     // Questions
