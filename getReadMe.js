@@ -58,17 +58,31 @@ const questions = [
   },
   // Installation instructions (Default N/A)
   {
-    type: "input",
+    type: "editor",
     name: "projInst",
     message: "Enter any installation instructions",
     default: "N/A",
+    validate(text) {
+      if (text === "") {
+        text = "N/A";
+      }
+      return true;
+    },
+    waitUserInput: true,
   },
   // Usage information
   {
-    type: "input",
+    type: "editor",
     name: "projUsage",
     message: "Enter usage information",
     default: "N/A",
+    validate(text) {
+      if (text.split("\n").length < 1) {
+        return "Must be at least 1 line of information.";
+      }
+      return true;
+    },
+    waitUserInput: true,
   },
 
   // License
@@ -129,10 +143,17 @@ const questions = [
   },
   // Tests
   {
-    type: "input",
+    type: "editor",
     name: "projTst",
     message: "Enter tests for this project",
     default: "N/A",
+    validate(text) {
+      if (text === "") {
+        text = "N/A";
+      }
+      return true;
+    },
+    waitUserInput: true,
   },
 ];
 
@@ -147,43 +168,63 @@ function writeToFile(fileName, data) {
 async function init() {
   // initialise/set variables
   let responses;
-  // ask questions (with validation, with list selections, with defaults)
-  await inquirer.prompt(questions).then((answers) => {
-    // get repo name and user name from projRepo
-    const repoArr = answers.projRepo.split("/");
-    // then use img shields to get License IMG (Report must be public!!)
-    const projLicImg =
-      "![GitHub License](https://img.shields.io/github/license/" +
-      repoArr[3] +
-      "/" +
-      repoArr[4] +
-      ")";
-    answers.projLicImg = projLicImg;
-    // build questions and add to answers object before passing to generateMarkdown()
-    let ansEml =
-      "If you wish to contact me, you can email me at " + answers.projEml;
-    let ansGit =
-      "My github profile can be found at https://github.com/" + answers.projGit;
 
-    if (answers.projEml === "N/A" && answers.projGit === "N/A") {
-      answers.q1 = "N/A";
-      answers.q2 = "";
-    } else if (!answers.projEml === "N/A" && !answers.projGit === "N/A") {
-      answers.q1 = ansEml;
-      answers.q2 = ansGit;
-    } else if (!answers.projEml) {
-      answers.q1 = ansEml;
-      answers.q2 = "";
-    } else {
-      answers.q1 = ansGit;
-      answers.q2 = "";
-    }
-    responses = answers;
-  });
+  // If there are not 3 arugments, then log and do not process
+  if (process.argv.length < 3) {
+    console.log("Usage: node genReadme.js <pathname>");
+    console.log(
+      "<pathname> is the fully qualified folder to where the README.md will be created"
+    );
+    console.log(
+      "If a README.md already exists in the folder, it will be overwritten!"
+    );
+  }
+  // if the folder (argv[2]) does not exist, log error and do not process
+  else if (1 === 1) {
+    console.log("Unable to access folder " + process.argv[2]);
+    console.log("Please check folder exists and/or permissions are correct");
+  }
+  // Perform README.md process
+  else {
+    // ask questions (with validation, with list selections, with defaults)
+    await inquirer.prompt(questions).then((answers) => {
+      // get repo name and user name from projRepo
+      const repoArr = answers.projRepo.split("/");
+      // then use img shields to get License IMG (Report must be public!!)
+      const projLicImg =
+        "![GitHub License](https://img.shields.io/github/license/" +
+        repoArr[3] +
+        "/" +
+        repoArr[4] +
+        ")";
+      answers.projLicImg = projLicImg;
+      // build questions and add to answers object before passing to generateMarkdown()
+      let ansEml =
+        "If you wish to contact me, you can email me at " + answers.projEml;
+      let ansGit =
+        "My github profile can be found at https://github.com/" +
+        answers.projGit;
 
-  console.log(responses);
-  // save to README.md in specified directory
-  await writeToFile("README.md", generateMarkdown(responses));
+      if (answers.projEml === "N/A" && answers.projGit === "N/A") {
+        answers.q1 = "N/A";
+        answers.q2 = "";
+      } else if (!answers.projEml === "N/A" && !answers.projGit === "N/A") {
+        answers.q1 = ansEml;
+        answers.q2 = ansGit;
+      } else if (!answers.projEml) {
+        answers.q1 = ansEml;
+        answers.q2 = "";
+      } else {
+        answers.q1 = ansGit;
+        answers.q2 = "";
+      }
+      responses = answers;
+    });
+
+    console.log(responses);
+    // save to README.md in specified directory
+    await writeToFile("README.md", generateMarkdown(responses));
+  }
 }
 
 // function call to initialize program
