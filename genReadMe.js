@@ -171,18 +171,18 @@ async function init() {
 
   // If there are not 3 arugments, then log and do not process
   if (process.argv.length < 3) {
-    console.log("Usage: node genReadme.js <pathname>");
-    console.log(
+    console.error("Usage: node genReadme.js <pathname>");
+    console.error(
       "<pathname> is the fully qualified folder to where the README.md will be created"
     );
-    console.log(
+    console.error(
       "If a README.md already exists in the folder, it will be overwritten!"
     );
   }
   // if the folder (argv[2]) does not exist, log error and do not process
-  else if (1 === 1) {
-    console.log("Unable to access folder " + process.argv[2]);
-    console.log("Please check folder exists and/or permissions are correct");
+  else if (!fs.existsSync(process.argv[2])) {
+    console.error("Unable to access folder " + process.argv[2]);
+    console.error("Please check folder exists and/or permissions are correct");
   }
   // Perform README.md process
   else {
@@ -223,7 +223,7 @@ async function init() {
 
     console.log(responses);
     // save to README.md in specified directory
-    await writeToFile("README.md", generateMarkdown(responses));
+    await writeToFile(process.argv[2]+"/README.md", generateMarkdown(responses));
   }
 }
 
