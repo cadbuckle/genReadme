@@ -108,17 +108,33 @@ const questions = [
   },
   // Features
   {
-    type: "input",
+    type: "editor",
     name: "projFeat",
     message: "Enter any feature of the project",
     default: "N/A",
+    validate(text) {
+      if (text === "") {
+        text = "N/A";
+      }
+      return true;
+    },
+    waitUserInput: true,
+
   },
   // Acknowledgements
   {
-    type: "input",
+    type: "editor",
     name: "projAck",
     message: "Enter acknowledgements/references for this project",
     default: "N/A",
+    validate(text) {
+      if (text === "") {
+        text = "N/A";
+      }
+      return true;
+    },
+    waitUserInput: true,
+
   },
   // Github user
   {
@@ -204,19 +220,18 @@ async function init() {
       let ansGit =
         "My github profile can be found at https://github.com/" +
         answers.projGit;
-
-      if (answers.projEml === "N/A" && answers.projGit === "N/A") {
+      if (answers.projEml == "N/A" && answers.projGit == "N/A") {
         answers.q1 = "N/A";
         answers.q2 = "";
-      } else if (!answers.projEml === "N/A" && !answers.projGit === "N/A") {
-        answers.q1 = ansEml;
-        answers.q2 = ansGit;
-      } else if (!answers.projEml) {
+      } else if (answers.projEml == "N/A") {
+        answers.q1 = ansGit;
+        answers.q2 = "";
+      } else if (answers.profGit == "N/A") {
         answers.q1 = ansEml;
         answers.q2 = "";
       } else {
         answers.q1 = ansGit;
-        answers.q2 = "";
+        answers.q2 = ansEml;
       }
       responses = answers;
     });
