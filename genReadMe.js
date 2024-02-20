@@ -1,5 +1,4 @@
 const fs = require("fs");
-const path = require("path");
 const inquirer = require("inquirer");
 const generateMarkdown = require("./utils/generateMarkdown");
 
@@ -236,7 +235,7 @@ async function init() {
       responses = answers;
     });
 
-    console.log(responses);
+
     // save to README.md in specified directory
     await writeToFile(process.argv[2]+"/README.md", generateMarkdown(responses));
   }

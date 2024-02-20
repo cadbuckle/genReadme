@@ -1,49 +1,50 @@
-# weather
-undefined
+# ReadMe Generator
 
 ## Description
-asn;fja
-] ;oinjab;relyjmv pa9egu a;ea46b 54;o ghsdf 
-
+This application quickly generates a README.md file by prompting the user for some information and then creating the formatted file containing the user responses.
 
 ## Table of Contents
 * [Links](#links)
 * [Installation](#installation)
 * [Usage](#usage)
-* [Screenshots](#screenshots)
-* [Project Items](#project-items)
 * [License](#license)
 * [Features](#features)
+* [Contributions](#contributions)
 
 ## Links
-* [Repo](https://github.com/cadbuckle/weather-forecast)
-* [Live](https://github.com/cadbuckle/weather-forecast)
+* [Repo](https://github.com/cadbuckle/genReadme)
+* [Video Walkthough](https://app.screencastify.com/v3/watch/15sn7geVcPjDgQUchMZM)
 
 ## Installation
-copy the files
+* Latest LTS version of Node required (Available here: https://nodejs.org/en/)
+* Installation of the third party module "inquirer" (Please use version 8.0.0)
 
 ## Usage
-asd jfkjfd sakjshd flkha sdf 
+From the command line enter:
+    node genReadMe.js <full pathname of folder to place README.md>
 
-## Screenshots
+A series of prompt will be presented for completion. When they have all been completed, the README.md will be created in the specified folder.
+
+For example: 
+* "node genReadMe.js ."  would create the README.md in the current directory.
+* "node genReadMe.js ./weatherApp" would create the README.md in a subdirectory called weatherApp.
+
+NOTE: destination folders must already exist. If the folder already contains a README.md file, it will be overwritten.
 
 ## License
-BSD 2-Clause "Simplified" License
+MIT License as per repository.
 
 ## Features
-api and other things
+* JavaScript
+* Node.JS
+* Includes the use of filesystem for directory and file manipulation
+* Includes the use of inquirer to prompt the user with various questions
 
 ## Contributions
-N/A
-
-## Tests
-N/A
-
-## Acknowledgements
-me, w3schools
-
-## Questions?
-My github profile can be found at https://github.com/cadbuckle
-
+Thanks to:
+* EdX Bootcamp
+* Node.js
+* SBoudrias (Inquirer)
+* Shields.io (For displaying License badge at the top of the generated Readme)
 
 © 2024 edX Boot Camps LLC. Confidential and Proprietary. All Rights Reserved.
